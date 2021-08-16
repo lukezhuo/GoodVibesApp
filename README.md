@@ -1,6 +1,6 @@
 # Goodvibesboardapp
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 12.1.4.
+This project contans the frontend for the GoodVibesApp. It was generated with [Angular CLI](https://github.com/angular/angular-cli) version 12.1.4.
 
 The backend for this project was hidden to obscure personal API keys. Until October 2021 (GCP billing begins), it can be accessed at http://35.232.148.123:8080/notes/all. A demonstration of a Microservice built with Java Spring Boot, is shown in the repository demo_microserviice.
 
