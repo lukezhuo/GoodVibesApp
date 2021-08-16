@@ -1,0 +1,54 @@
+---
+apiVersion: "apps/v1"
+kind: "Deployment"
+metadata:
+  name: "goodvibesappservice"
+  namespace: "default"
+  labels:
+    app: "goodvibesappservice"
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: "goodvibesappservice"
+  template:
+    metadata:
+      labels:
+        app: "goodvibesappservice"
+    spec:
+      containers:
+      - name: "goodvibesboardapp-sha256-1"
+        image: "gcr.io/rare-haiku-321303/goodvibesboardapp@sha256:fefdd8ec68188c44be36bfc18871c66aa30855efd77fe8e658b98fea847ba44b"
+---
+apiVersion: "autoscaling/v2beta1"
+kind: "HorizontalPodAutoscaler"
+metadata:
+  name: "goodvibesappservice-hpa-wkd5"
+  namespace: "default"
+  labels:
+    app: "goodvibesappservice"
+spec:
+  scaleTargetRef:
+    kind: "Deployment"
+    name: "goodvibesappservice"
+    apiVersion: "apps/v1"
+  minReplicas: 1
+  maxReplicas: 5
+  metrics:
+  - type: "Resource"
+    resource:
+      name: "cpu"
+      targetAverageUtilization: 80
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: goodvibesservice
+spec:
+  selector:
+    app: goodvibesservice
+  ports:
+    - protocol: TCP
+      port: 8080
+      targetPort: 8080
+  type: LoadBalancer
